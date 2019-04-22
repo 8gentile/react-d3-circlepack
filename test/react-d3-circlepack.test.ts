@@ -1,4 +1,4 @@
-import DummyClass from '../src/react-d3-circlepack'
+import ReactD3CirclePack from '../src/pack/react-d3-circlepack'
 
 /**
  * Dummy test
@@ -8,7 +8,7 @@ describe('Dummy test', () => {
     expect(true).toBeTruthy()
   })
 
-  it('DummyClass is instantiable', () => {
-    expect(new DummyClass()).toBeInstanceOf(DummyClass)
+  it('ReactD3CirclePack is instantiable', () => {
+    expect(new ReactD3CirclePack({ name: 'jeff' })).toBeInstanceOf(ReactD3CirclePack)
   })
 })
