@@ -13,13 +13,14 @@
     ],
     "jsx": "react",
     "strict": true,
-    "declaration": true,
     "isolatedModules": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "emitDeclarationOnly": false,
     "outDir": "lib",
+    "allowJs": true,
+    "skipLibCheck": true,
     "typeRoots": [
       "node_modules/@types"
     ]
