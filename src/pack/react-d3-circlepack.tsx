@@ -1,11 +1,7 @@
 import * as React from 'react'
 
-export interface IReactD3CirclePackProps {
-  name: string
-}
-export interface IReactD3CirclePackState {
-  NAME: string
-}
+export interface IReactD3CirclePackProps {}
+export interface IReactD3CirclePackState {}
 
 export default class ReactD3CirclePack extends React.Component<
   IReactD3CirclePackProps,
@@ -13,12 +9,13 @@ export default class ReactD3CirclePack extends React.Component<
 > {
   constructor(props) {
     super(props)
-    this.state = {
-      NAME: `${this.props.name.split('')}`
-    }
   }
 
   render() {
-    return <div>{`Hello ${this.state.NAME}, you fabulous hummingbird!`}</div>
+    return (
+      <div>
+        <svg />
+      </div>
+    )
   }
 }

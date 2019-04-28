@@ -18,6 +18,6 @@ describe('Dummy test', () => {
   it('renders', () => {
     const wrapper = shallow(<ReactD3CirclePack name="barbie" />);
     console.log(wrapper.debug());
-    expect(wrapper.find('div').exists());
+    expect(wrapper.find('svg').exists());
   })
 })
