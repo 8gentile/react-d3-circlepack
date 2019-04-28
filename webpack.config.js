@@ -46,10 +46,10 @@ module.exports = ({ mode }) => {
     plugins: [
       new webpack.ProgressPlugin(),
       new ForkTsCheckerWebpackPlugin(),
-      new DeclarationBundlerPlugin({
-            moduleName:'./src/pack/react-d3-circlpack.tsx',
-            out:'./index.d.ts',
-        }),
+      // new DeclarationBundlerPlugin({
+      //       moduleName:'ReactD3CirclePack',
+      //       out:'./index.d.ts',
+      // }),
     ],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx']

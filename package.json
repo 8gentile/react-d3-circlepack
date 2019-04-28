@@ -23,9 +23,11 @@
     "clean:lib": "rimraf lib",
     "clean:dist": "rimraf dist",
     "clean": "rimraf dist & rimraf lib",
-    "tsc": "yarn clean & yarn build:lib:es",
-    "build:lib:es": "tsc --build tsconfig.json --listFiles --listEmittedFiles",
-    "watch": "yarn:dist & webpack --config webpack.config.dev.js --env.mode development --watch",
+    "tsc": "tsc --project . --listFiles --listEmittedFiles",
+    "build:lib": "yarn clean:lib & yarn tsc",
+    "watch": "yarn clean:dist & webpack --env.mode development --watch",
+    "build": "yarn clean & yarn build:dist & yarn build:lib",
+    "build:dist": "yarn clean:dist & webpack --env.mode production",
     "webpack": "webpack",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
@@ -36,7 +38,7 @@
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "travis-deploy-once": "travis-deploy-once",
-    "prepush": "npm run test:prod && npm run build",
+    "prepush": "yarn test:prod && yarn build",
     "commitmsg": "commitlint -E HUSKY_GIT_PARAMS"
   },
   "lint-staged": {
