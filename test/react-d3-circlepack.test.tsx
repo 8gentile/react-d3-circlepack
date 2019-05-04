@@ -15,8 +15,11 @@ describe('Dummy test', () => {
     expect(new ReactD3CirclePack({ name: 'jeff' })).toBeInstanceOf(ReactD3CirclePack)
   })
 
-  it('renders', () => {
-    const wrapper = shallow(<ReactD3CirclePack name="barbie" />);
+  it('renders a circle for a single node', () => {
+    const data = {
+      key: 'Hello Orbital Sphere'
+    }
+    const wrapper = shallow(<ReactD3CirclePack data={data} />);
     console.log(wrapper.debug());
     expect(wrapper.find('svg').exists());
   })
