@@ -18,8 +18,8 @@ export interface ReactD3CirclePackProps<Datum> extends ReactD3CirclePackDefaultP
 }
 export interface ReactD3CirclePackState<Datum> {
   nodes: HierarchyCircularNode<ICirclePackNode<Datum>>[]
-  height: number
-  width: number
+  height?: number
+  width?: number
 }
 
 export interface ICirclePackNode<Datum> {
@@ -34,7 +34,7 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
   ReactD3CirclePackProps<Datum>,
   ReactD3CirclePackState<Datum>
 > {
-  static defaultProps: ReactD3CirclePackDefaultProps = {
+  private static defaultProps: ReactD3CirclePackDefaultProps = {
     height: 1000,
     width: 1000
   }
@@ -42,9 +42,9 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
   constructor(props) {
     super(props)
     this.state = {
-      nodes: this.assignInternalProperties(this.props),
-      height: this.props.height,
-      width: this.props.width
+      height: props.height!,
+      width: props.width!,
+      nodes: this.assignInternalProperties(props)
     }
   }
 
@@ -66,7 +66,7 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
   private getHierarchyCirclularNodes = (data: ICirclePackNode<Datum>) => {
     const { height, width } = this.state
     const circleNodes = pack<ICirclePackNode<Datum>>()
-      .size([width, height])
+      .size([this.state.width!, this.state.height!])
       .padding(3)(hierarchy(data).sum(d => d.value))
 
     return circleNodes.descendants()
