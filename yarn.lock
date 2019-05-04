@@ -1037,6 +1037,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/d3-hierarchy@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@types/d3-hierarchy/-/d3-hierarchy-1.1.6.tgz#4c017521900813ea524c9ecb8d7985ec26a9ad9a"
+  integrity sha512-vvSaIDf/Ov0o3KwMT+1M8+WbnnlRiGjlGD5uvk83a1mPCTd/E5x12bUJ/oP55+wUY/4Kb5kc67rVpVGJ2KUHxg==
+
 "@types/enzyme@^3.9.1":
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/@types/enzyme/-/enzyme-3.9.1.tgz#3a0ce07e30066dbc26cd3474c8e680af2d249e26"
@@ -3002,6 +3007,11 @@ cz-conventional-changelog@2.1.0, cz-conventional-changelog@^2.1.0:
     longest "^1.0.1"
     right-pad "^1.0.1"
     word-wrap "^1.0.3"
+
+d3-hierarchy@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/d3-hierarchy/-/d3-hierarchy-1.1.8.tgz#7a6317bd3ed24e324641b6f1e76e978836b008cc"
+  integrity sha512-L+GHMSZNwTpiq4rt9GEsNcpLa4M96lXMR8M/nMG9p5hBE0jy6C+3hWtyZMenPQdwla249iJy7Nx0uKt3n+u9+w==
 
 dargs@^4.0.1:
   version "4.1.0"
@@ -6202,7 +6212,7 @@ lodash.capitalize@^4.2.1:
   resolved "https://registry.yarnpkg.com/lodash.capitalize/-/lodash.capitalize-4.2.1.tgz#f826c9b4e2a8511d84e3aca29db05e1a4f3b72a9"
   integrity sha1-+CbJtOKoUR2E46yinbBeGk87cqk=
 
-lodash.clonedeep@~4.5.0:
+lodash.clonedeep@^4.5.0, lodash.clonedeep@~4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
@@ -8842,7 +8852,7 @@ schema-utils@^1.0.0:
     ajv-errors "^1.0.0"
     ajv-keywords "^3.1.0"
 
-semantic-release@^15.9.16:
+semantic-release@^15.13.3:
   version "15.13.3"
   resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.13.3.tgz#412720b9c09f39f04df67478fa409a914107e05b"
   integrity sha512-cax0xPPTtsxHlrty2HxhPql2TTvS74Ni2O8BzwFHxNY/mviVKEhI4OxHzBYJkpVxx1fMVj36+oH7IlP+SJtPNA==
