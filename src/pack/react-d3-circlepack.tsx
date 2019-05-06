@@ -48,11 +48,13 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
       ...defaultProps,
       ...props
     }
+    const data = this.assignInternalProperties(madProps)
+
     this.state = {
       height: madProps.height,
       width: madProps.width,
-      data: this.assignInternalProperties(madProps),
-      nodes: this.getHierarchyCirclularNodes(madProps)
+      data,
+      nodes: this.getHierarchyCirclularNodes({ ...madProps, data })
     }
   }
 
