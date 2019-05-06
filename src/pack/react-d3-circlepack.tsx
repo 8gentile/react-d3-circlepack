@@ -1,10 +1,11 @@
 import { pack, hierarchy, HierarchyCircularNode } from 'd3-hierarchy'
 import * as React from 'react'
+import { cloneDeep } from 'lodash'
 import Circle from './circle'
 
 export interface ReactD3CirclePackDefaultProps {
-  height: number
-  width: number
+  height?: number
+  width?: number
 }
 
 export interface ReactD3CirclePackAccessorProps<Datum> {
@@ -17,9 +18,10 @@ export interface ReactD3CirclePackProps<Datum> extends ReactD3CirclePackDefaultP
   data: Datum
 }
 export interface ReactD3CirclePackState<Datum> {
+  data: ICirclePackNode<Datum>
+  height: number
   nodes: HierarchyCircularNode<ICirclePackNode<Datum>>[]
-  height?: number
-  width?: number
+  width: number
 }
 
 export interface ICirclePackNode<Datum> {
@@ -34,39 +36,45 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
   ReactD3CirclePackProps<Datum>,
   ReactD3CirclePackState<Datum>
 > {
-  private static defaultProps: ReactD3CirclePackDefaultProps = {
+  static defaultProps: ReactD3CirclePackDefaultProps = {
     height: 1000,
     width: 1000
   }
 
-  constructor(props) {
-    super(props)
+  constructor(props, defaultProps) {
+    super(props, defaultProps)
+
+    const madProps = {
+      ...defaultProps,
+      ...props
+    }
     this.state = {
-      height: props.height!,
-      width: props.width!,
-      nodes: this.assignInternalProperties(props)
+      height: madProps.height,
+      width: madProps.width,
+      data: this.assignInternalProperties(madProps),
+      nodes: this.getHierarchyCirclularNodes(madProps)
     }
   }
 
-  private assignInternalProperties = ({
+  private assignInternalProperties = ({ data, height, width }): ICirclePackNode<Datum> => {
+    // GENERIXXX
+    // CLONE data
+    const internalData = cloneDeep(data)
+    // use accessors to map public api values to internal values for safer manipulation
+
+    // return internalData;
+    // transform
+    // const hierarchyNodes = hierarchy(data)
+    return internalData
+  }
+
+  private getHierarchyCirclularNodes = ({
     data,
     height,
     width
   }): HierarchyCircularNode<ICirclePackNode<Datum>>[] => {
-    // CLONE data
-    const internalData = data
-    // use accessors to map public api values to internal values for safer manipulation
-
-    // transform
-    const hierarchyNodes = hierarchy(data)
-
-    return this.getHierarchyCirclularNodes(internalData)
-  }
-
-  private getHierarchyCirclularNodes = (data: ICirclePackNode<Datum>) => {
-    const { height, width } = this.state
     const circleNodes = pack<ICirclePackNode<Datum>>()
-      .size([this.state.width!, this.state.height!])
+      .size([width, height])
       .padding(3)(hierarchy(data).sum(d => d.value))
 
     return circleNodes.descendants()
@@ -77,12 +85,12 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
   }
 
   render() {
-    const { nodes } = this.state
+    const { nodes, height, width } = this.state
 
     const divStyle = {
       backgroundColor: 'white',
-      height: '1000px',
-      width: '1000px'
+      height: `${height}px`,
+      width: `${width}px`
     }
     return (
       <div style={divStyle}>
