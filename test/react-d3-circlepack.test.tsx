@@ -12,9 +12,6 @@ describe('Dummy test', () => {
       key: 'Hello Orbital Sphere'
     }
   })
-  it('works if true is truthy', () => {
-    expect(true).toBeTruthy()
-  })
 
   it('renders a circle for a single node', () => {
     const wrapper = shallow(<ReactD3CirclePack data={data} />);
