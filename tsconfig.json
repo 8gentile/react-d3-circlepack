@@ -11,6 +11,16 @@
       "es2017",
       "dom"
     ],
+    "typeRoots": [
+      "node_modules/@types",
+      "manual_typings"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "lodash/*": [
+        "node_modules/@types/lodash-es/*"
+      ],
+    },
     "jsx": "react",
     "strict": true,
     "declaration": true,
@@ -22,9 +32,6 @@
     "outDir": "lib",
     "allowJs": false,
     "skipLibCheck": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
   },
   "include": [
     "./src"

@@ -6,18 +6,16 @@ const { shallow } = require('enzyme');
  * Dummy test
  */
 describe('Dummy test', () => {
-  it('works if true is truthy', () => {
-    expect(true).toBeTruthy()
+  let data;
+  beforeEach(() => {
+    data = {
+      key: 'Hello Orbital Sphere'
+    }
   })
 
-  it('ReactD3CirclePack is instantiable', () => {
-
-    expect(new ReactD3CirclePack({ name: 'jeff' })).toBeInstanceOf(ReactD3CirclePack)
-  })
-
-  it('renders', () => {
-    const wrapper = shallow(<ReactD3CirclePack name="barbie" />);
+  it('renders a circle for a single node', () => {
+    const wrapper = shallow(<ReactD3CirclePack data={data} />);
     console.log(wrapper.debug());
-    expect(wrapper.find('div').exists());
+    expect(wrapper.find('svg').exists());
   })
 })

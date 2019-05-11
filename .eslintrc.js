@@ -20,7 +20,7 @@ module.exports = {
   "parserOptions": {
     "jsx": true,
     "useJSXTextNode": true,
-    "project": "./react-d3-circlepack/tsconfig.json",
+    "project": "./tsconfig.json",
     "sourceType": "module",
   },
   "plugins": ["react","@typescript-eslint", "jest"],

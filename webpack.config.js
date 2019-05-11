@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const DeclarationBundlerPlugin = require('declaration-bundler-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 var babelLoader = {
   loader: 'babel-loader',
@@ -46,6 +47,9 @@ module.exports = ({ mode }) => {
     plugins: [
       new webpack.ProgressPlugin(),
       new ForkTsCheckerWebpackPlugin(),
+      new LodashModuleReplacementPlugin({
+        caching: true
+      }),
       // new DeclarationBundlerPlugin({
       //       moduleName:'ReactD3CirclePack',
       //       out:'./index.d.ts',
