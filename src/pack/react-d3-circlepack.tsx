@@ -3,19 +3,16 @@ import * as React from 'react'
 import { cloneDeep } from 'lodash'
 import Circle from './circle'
 
-export interface ReactD3CirclePackDefaultProps {
+export interface ReactD3CirclePackAccessorProps<Datum> {
+  keyAccessor?: (d: Datum) => string
+  valueAccessor?: (d: Datum) => number
+  childAccessor?: (d: Datum) => Datum[]
+  colorConfigAccessor?: (d: Datum) => string
+}
+export interface ReactD3CirclePackProps<Datum> extends ReactD3CirclePackAccessorProps<Datum> {
+  data: Datum
   height?: number
   width?: number
-}
-
-export interface ReactD3CirclePackAccessorProps<Datum> {
-  keyAccessor: (d: Datum) => string
-  valueAccessor: (d: Datum) => number
-  children: (d: Datum) => Datum[]
-  colorConfigAccessor: (d: Datum) => string
-}
-export interface ReactD3CirclePackProps<Datum> extends ReactD3CirclePackDefaultProps {
-  data: Datum
 }
 export interface ReactD3CirclePackState<Datum> {
   data: ICirclePackNode<Datum>
@@ -26,48 +23,55 @@ export interface ReactD3CirclePackState<Datum> {
 
 export interface ICirclePackNode<Datum> {
   data?: Datum
-  color?: string // accessor
-  children?: ICirclePackNode<Datum> // accessor
-  key: string // accessor
-  value: number // accessor
+  color?: string
+  _children?: ICirclePackNode<Datum>
+  _key: string
+  _value: number
 }
 
 export default class ReactD3CirclePack<Datum> extends React.Component<
   ReactD3CirclePackProps<Datum>,
   ReactD3CirclePackState<Datum>
 > {
-  static defaultProps: ReactD3CirclePackDefaultProps = {
-    height: 1000,
-    width: 1000
+  static defaultProps = {
+    height: 500,
+    width: 500,
+    keyAccessor: d => d.key,
+    valueAccessor: d => d.value,
+    childAccessor: d => d.children || []
   }
+
+  // used for assigning internal properties
+  static value = Symbol('value')
+  static children = Symbol('children')
+  static key = Symbol('key')
 
   constructor(props, defaultProps) {
     super(props, defaultProps)
 
     const madProps = {
       ...defaultProps,
-      ...props
+      ...props,
+      data: this.assignInternalProperties(cloneDeep(props.data))
     }
-    const data = this.assignInternalProperties(madProps)
-
     this.state = {
       height: madProps.height,
       width: madProps.width,
-      data,
-      nodes: this.getHierarchyCirclularNodes({ ...madProps, data })
+      data: madProps.data,
+      nodes: this.getHierarchyCirclularNodes(madProps)
     }
   }
 
-  private assignInternalProperties = ({ data, height, width }): ICirclePackNode<Datum> => {
-    // GENERIXXX
-    // CLONE data
-    const internalData = cloneDeep(data)
-    // use accessors to map public api values to internal values for safer manipulation
+  private assignInternalProperties = (data): ICirclePackNode<Datum> => {
+    ;[data].forEach(node => {
+      node[ReactD3CirclePack.value] = this.props.valueAccessor!(node)
+      node[ReactD3CirclePack.key] = this.props.keyAccessor!(node)
+      node[ReactD3CirclePack.children] = this.props.childAccessor!(node)
 
-    // return internalData;
-    // transform
-    // const hierarchyNodes = hierarchy(data)
-    return internalData
+      node[ReactD3CirclePack.children].length &&
+        node[ReactD3CirclePack.children].forEach(this.assignInternalProperties)
+    })
+    return data
   }
 
   private getHierarchyCirclularNodes = ({
@@ -77,8 +81,7 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
   }): HierarchyCircularNode<ICirclePackNode<Datum>>[] => {
     const circleNodes = pack<ICirclePackNode<Datum>>()
       .size([width, height])
-      .padding(3)(hierarchy(data).sum(d => d.value))
-
+      .padding(3)(hierarchy(data).sum(d => d[ReactD3CirclePack.value]))
     return circleNodes.descendants()
   }
 
@@ -88,7 +91,6 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
 
   render() {
     const { nodes, height, width } = this.state
-
     const divStyle = {
       backgroundColor: 'white',
       height: `${height}px`,
@@ -99,7 +101,6 @@ export default class ReactD3CirclePack<Datum> extends React.Component<
         <svg height="100%" width="100%">
           {this.renderCircleNodes(nodes)}
         </svg>
-        />
       </div>
     )
   }
